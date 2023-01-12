@@ -1,0 +1,18 @@
+.locations {
+    margin: 3rem auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: center;
+    width: 90%;
+    background: #4a4e69;
+    border-color: #f2e9e4;
+    border: 2px;
+    border-radius: 12px;
+}
+
+.ul {
+    padding-inline-start: 0px;
+    padding: 16px;
+}
