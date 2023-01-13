@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import './App.css';
+import AuthenticationScreen from './components/Authentication/AuthenticationScreen';
 import Header from './components/Layout/Header';
 import AddLocation from './components/Locations/AddLocation';
 import LocationsDisplay from './components/Locations/LocationsDisplay';
@@ -141,8 +142,10 @@ function App() {
     return (
         <>
             <Header></Header>
+            {/*
             <AddLocation onAddLocation={addLocationHandler}></AddLocation>
-            {content}
+            {content} */}
+            <AuthenticationScreen></AuthenticationScreen>
         </>
     );
 }
