@@ -119,7 +119,7 @@ function App() {
         fetchLocationsHandler();
     }, [fetchLocationsHandler, addLocationHandler, removeLocationHandler]);
 
-    let content = <p>Found no locations.</p>;
+    let content = <section>Found no locations.</section>;
 
     if (locations.length > 0) {
         content = (
