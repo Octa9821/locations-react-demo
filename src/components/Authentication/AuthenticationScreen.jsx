@@ -1,8 +1,10 @@
-import axios from 'axios';
-import { useRef, useState } from 'react';
+// import axios from 'axios';
+import { useContext, useRef, useState } from 'react';
+import AuthContext from '../../store/auth-context';
 import styles from './AuthenticationScreen.module.css';
 
 const AuthenticationScreen = () => {
+    const authCtx = useContext(AuthContext);
     const usernameRef = useRef('');
     const passwordRef = useRef('');
     const confirmPasswordRef = useRef('');
@@ -10,8 +12,10 @@ const AuthenticationScreen = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
     const [isRegister, setIsRegister] = useState('');
+    const [isInvalidCredentials, setIsInvalidCredentials] = useState(false);
+    const [isRegisterComplete, setIsRegisterComplete] = useState(false);
 
-    const formValidation = (event) => {
+    const formValidation = () => {
         let formIsValid = true;
         setUsernameError(false);
         setPasswordError(false);
@@ -25,17 +29,21 @@ const AuthenticationScreen = () => {
             setPasswordError(true);
             formIsValid = false;
         }
-        if (confirmPasswordRef.current.value !== passwordRef.current.value) {
-            setConfirmPasswordError(true);
-            formIsValid = false;
+        if (isRegister) {
+            if (
+                confirmPasswordRef.current.value !== passwordRef.current.value
+            ) {
+                setConfirmPasswordError(true);
+                formIsValid = false;
+            }
         }
+
         return formIsValid;
     };
 
     const submitHandler = async (event) => {
         event.preventDefault();
-        let url = 'http://localhost:8370/api/Authentication/';
-        // use .fetch() instead of axios to see if it works
+        let url = 'https://localhost:44335/api/Authentication/';
 
         if (!formValidation(event)) {
             return;
@@ -46,16 +54,42 @@ const AuthenticationScreen = () => {
         } else {
             url += 'login';
         }
-        var result = await axios.post(url, {
+        let authData = {
             username: usernameRef.current.value,
             password: passwordRef.current.value,
+        };
+
+        let response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(authData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
-        debugger;
+
+        if (response.ok) {
+            let data = await response.status;
+            console.log('Result ok, response: ' + data);
+
+            if (url.includes('login')) {
+                setIsInvalidCredentials(false);
+                authCtx.onLogin(authData.username, authData.password);
+            }
+
+            if (url.includes('register')) {
+                setIsRegisterComplete(true);
+            }
+        } else {
+            console.log('Error:', response.status);
+            if (response.status === 404 && url.includes('login')) {
+                setIsInvalidCredentials(true);
+            }
+        }
     };
 
     return (
         <div>
-            <h3>Authentication</h3>
+            <h3 className={styles.h3}>Authentication</h3>
             <form onSubmit={submitHandler}>
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" ref={usernameRef}></input>
@@ -68,7 +102,7 @@ const AuthenticationScreen = () => {
                 <input
                     type="password"
                     id="password"
-                    minLength="8"
+                    minLength={isRegister ? '8' : undefined}
                     ref={passwordRef}
                 ></input>
                 {passwordError && (
@@ -94,7 +128,10 @@ const AuthenticationScreen = () => {
                             <p>Already a user?</p>
                             <p
                                 className={styles.p_authenticationText}
-                                onClick={() => setIsRegister(false)}
+                                onClick={() => {
+                                    setIsRegister(false);
+                                    setIsRegisterComplete(false);
+                                }}
                             >
                                 LOGIN
                             </p>
@@ -107,18 +144,31 @@ const AuthenticationScreen = () => {
                             <p>Need an account?</p>
                             <p
                                 className={styles.p_authenticationText}
-                                onClick={() => setIsRegister(true)}
+                                onClick={() => {
+                                    setIsRegister(true);
+                                    setIsInvalidCredentials(false);
+                                }}
                             >
                                 REGISTER
                             </p>
                         </span>
                     </>
                 )}
-                <span>
-                    <button type="submit">
-                        {isRegister ? 'Register' : 'Login'}
-                    </button>
-                </span>
+                {isInvalidCredentials && (
+                    <p className={styles.p_infoText}>
+                        Invalid credentials. If you don't have an account,
+                        please register.
+                    </p>
+                )}
+                {isRegisterComplete && (
+                    <p className={styles.p_infoText}>
+                        Registration is complete. You can now login with your
+                        new credentials.
+                    </p>
+                )}
+                <button type="submit">
+                    {isRegister ? 'Register' : 'Login'}
+                </button>
             </form>
         </div>
     );

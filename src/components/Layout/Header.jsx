@@ -1,5 +1,6 @@
 import styles from './Header.module.css';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
+import Navigation from './Navigation';
 
 const Header = (props) => {
     return (
@@ -12,6 +13,7 @@ const Header = (props) => {
                     />
                     React Locations App
                 </h1>
+                <Navigation onLogout={props.onLogout} />
             </div>
         </div>
     );

@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import './App.css';
 import AuthenticationScreen from './components/Authentication/AuthenticationScreen';
 import Header from './components/Layout/Header';
 import AddLocation from './components/Locations/AddLocation';
 import LocationsDisplay from './components/Locations/LocationsDisplay';
+import AuthContext from './store/auth-context';
 
 function App() {
+    const authCtx = useContext(AuthContext);
     const [locations, setLocations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -15,7 +17,7 @@ function App() {
         setError(null);
         try {
             const response = await fetch(
-                'https://localhost:8370/api/Locations'
+                'https://localhost:44335/api/Locations'
             );
 
             if (!response.ok) {
@@ -43,7 +45,7 @@ function App() {
     }, []);
 
     const addLocationHandler = useCallback(async (location) => {
-        const response = await fetch('https://localhost:8370/api/Locations', {
+        const response = await fetch('https://localhost:44335/api/Locations', {
             method: 'POST',
             body: JSON.stringify(location),
             headers: { 'Content-Type': 'application/json' },
@@ -52,7 +54,7 @@ function App() {
 
         try {
             const response = await fetch(
-                'https://localhost:8370/api/Locations'
+                'https://localhost:44335/api/Locations'
             );
 
             if (!response.ok) {
@@ -83,12 +85,12 @@ function App() {
 
     const removeLocationHandler = useCallback(async (locationId) => {
         console.log(locationId);
-        fetch('https://localhost:8370/api/Locations/' + locationId, {
+        fetch('https://localhost:44335/api/Locations/' + locationId, {
             method: 'DELETE',
         }).then(async () => {
             try {
                 const response = await fetch(
-                    'https://localhost:8370/api/Locations'
+                    'https://localhost:44335/api/Locations'
                 );
 
                 if (!response.ok) {
@@ -142,10 +144,19 @@ function App() {
     return (
         <>
             <Header></Header>
-            {/*
-            <AddLocation onAddLocation={addLocationHandler}></AddLocation>
-            {content} */}
-            <AuthenticationScreen></AuthenticationScreen>
+            <main>
+                {!authCtx.isLoggedIn && (
+                    <AuthenticationScreen></AuthenticationScreen>
+                )}
+                {authCtx.isLoggedIn && (
+                    <>
+                        <AddLocation
+                            onAddLocation={addLocationHandler}
+                        ></AddLocation>
+                        {content}
+                    </>
+                )}
+            </main>
         </>
     );
 }
