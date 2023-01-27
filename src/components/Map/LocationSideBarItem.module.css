@@ -1,0 +1,79 @@
+.item_box {
+    margin: 1rem auto;
+    width: 95%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.25);
+    background-color: #71717117;
+}
+
+.span {
+    margin: auto;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 35%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin: 1rem 0.75rem;
+    border: none;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.25);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.img:hover {
+    box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.text_and_buttons {
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+
+.text_box {
+    margin: 0.5rem 0;
+}
+
+.p_name {
+    margin-top: 0.25rem;
+    font-weight: bold;
+}
+
+.p_desc {
+    font-size: small;
+}
+
+.button {
+    background-color: #9a8c98;
+    color: #282c34;
+    font-weight: bold;
+    padding: 1rem 1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #d3d3d386;
+    font-size: 14px;
+    border-radius: 5rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: all 0.1s ease-in-out;
+}
+
+.button:hover {
+    background-color: #cebbcb;
+}
+
+.button:active {
+    background-color: #cebbcb;
+    box-shadow: 0 5px 3px #666;
+    transform: translateY(3px);
+}

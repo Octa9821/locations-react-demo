@@ -12,7 +12,9 @@ const LocationsDisplay = (props) => {
                         name={place.name}
                         description={place.description}
                         imgUrl={place.imgUrl}
-                    ></LocationItem>
+                        latitude={place.latitude}
+                        longitude={place.longitude}
+                    />
                 </ul>
             ))}
         </div>

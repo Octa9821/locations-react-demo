@@ -2,6 +2,9 @@
 import { useContext, useRef, useState } from 'react';
 import AuthContext from '../../store/auth-context';
 import styles from './AuthenticationScreen.module.css';
+import GoogleButton from 'react-google-button';
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const AuthenticationScreen = () => {
     const authCtx = useContext(AuthContext);
@@ -14,6 +17,7 @@ const AuthenticationScreen = () => {
     const [isRegister, setIsRegister] = useState('');
     const [isInvalidCredentials, setIsInvalidCredentials] = useState(false);
     const [isRegisterComplete, setIsRegisterComplete] = useState(false);
+    const navigate = useNavigate();
 
     const formValidation = () => {
         let formIsValid = true;
@@ -73,7 +77,9 @@ const AuthenticationScreen = () => {
 
             if (url.includes('login')) {
                 setIsInvalidCredentials(false);
-                authCtx.onLogin(authData.username, authData.password);
+                const tokenJson = await response.json();
+                authCtx.onLogin(tokenJson['token']);
+                navigate('/home');
             }
 
             if (url.includes('register')) {
@@ -85,6 +91,19 @@ const AuthenticationScreen = () => {
                 setIsInvalidCredentials(true);
             }
         }
+    };
+
+    const loginWithGoogle = async () => {
+        const auth = getAuth();
+        var googleProvider = new GoogleAuthProvider();
+
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                authCtx.onLogin();
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
     };
 
     return (
@@ -124,7 +143,7 @@ const AuthenticationScreen = () => {
                                 The passwords do not match.
                             </label>
                         )}
-                        <span>
+                        <span className={styles.span}>
                             <p>Already a user?</p>
                             <p
                                 className={styles.p_authenticationText}
@@ -166,9 +185,18 @@ const AuthenticationScreen = () => {
                         new credentials.
                     </p>
                 )}
-                <button type="submit">
+                <button type="submit" className={styles.button}>
                     {isRegister ? 'Register' : 'Login'}
                 </button>
+                {!isRegister && <p>or you can</p>}
+                {!isRegister && (
+                    <div>
+                        <GoogleButton
+                            onClick={loginWithGoogle}
+                            type="light"
+                        ></GoogleButton>
+                    </div>
+                )}
             </form>
         </div>
     );

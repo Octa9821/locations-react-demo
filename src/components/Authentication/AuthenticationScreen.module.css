@@ -47,7 +47,7 @@ label {
     font-size: 0.75rem;
 }
 
-button {
+.button {
     width: 10rem;
     height: 3.25rem;
     background-color: #9a8c98;
@@ -62,17 +62,17 @@ button {
     border-radius: 2rem;
 }
 
-button:hover {
+.button:hover {
     background-color: #cebbcb;
 }
 
-button:active {
+.button:active {
     background-color: #cebbcb;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
 
-span {
+.span {
     display: flex;
     justify-content: space-between;
     align-items: center;

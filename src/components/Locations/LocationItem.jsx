@@ -19,6 +19,9 @@ const LocationItem = (props) => {
                 src={props.imgUrl}
                 alt={props.name}
             ></img>
+            <p>
+                Lat: {props.latitude}, Long: {props.longitude}
+            </p>
             <button className={styles.button} onClick={onClickHandler}>
                 Remove item
             </button>
