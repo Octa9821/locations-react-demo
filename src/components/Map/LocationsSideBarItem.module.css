@@ -33,6 +33,13 @@
     cursor: pointer;
 }
 
+.dialog_img {
+    width: 100%;
+    border-radius: 0.5rem;
+    margin: auto;
+    border: none;
+}
+
 .text_and_buttons {
     position: relative;
     width: 90%;

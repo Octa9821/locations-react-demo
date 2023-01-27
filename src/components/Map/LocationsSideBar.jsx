@@ -3,9 +3,9 @@ import styles from './LocationsSideBar.module.css';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import LocationSideBarItem from './LocationSideBarItem';
+import LocationSideBarItem from './LocationsSideBarItem';
 
-const LocationsSideBar = () => {
+const LocationsSideBar = (props) => {
     let authToken = localStorage.getItem('authToken');
     const queryClient = useQueryClient();
     const [currentPageNumber, setCurrentPageNumber] = useState(1);
@@ -60,13 +60,14 @@ const LocationsSideBar = () => {
     return (
         <div className={styles.div}>
             <div className={styles.items_box}>
-                {locationsOnPage.map((location) => {
+                {locationsOnPage?.map((location) => {
                     return (
                         <LocationSideBarItem
                             key={location.id}
                             name={location.name}
                             imgUrl={location.imgUrl}
                             description={location.description}
+                            onFindOnMap={props.onFindOnMap}
                             latitude={location.latitude}
                             longitude={location.longitude}
                         />

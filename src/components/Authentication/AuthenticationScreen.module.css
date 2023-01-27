@@ -19,7 +19,7 @@ form {
     text-align: center;
 }
 
-input {
+.input {
     width: 90%;
     padding: 12px 20px;
     margin: 0.5rem 0;
@@ -31,11 +31,11 @@ input {
     font-size: 16px;
 }
 
-input:invalid {
+.input:invalid {
     background-color: #f09360;
 }
 
-label {
+.label {
     align-self: flex-start;
     margin: 0rem 4rem;
 }

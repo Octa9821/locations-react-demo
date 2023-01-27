@@ -33,7 +33,7 @@ function App() {
     const [error, setError] = useState(null);
     let authToken = localStorage.getItem('authToken');
     const navigate = useNavigate();
-    const test = true;
+    const test = false;
 
     const fetchLocationsHandler = useCallback(async () => {
         setIsLoading(true);
@@ -235,10 +235,10 @@ function App() {
                                         className={styles.menuIcon}
                                     ></MenuRoundedIcon>
                                 </button> */}
-                                <LocationsSideBar
+
+                                <LocationsMap
                                     locations={locations}
-                                ></LocationsSideBar>
-                                <LocationsMap locations={locations} />
+                                ></LocationsMap>
                             </>
                         }
                     />

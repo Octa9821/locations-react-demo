@@ -110,18 +110,28 @@ const AuthenticationScreen = () => {
         <div>
             <h3 className={styles.h3}>Authentication</h3>
             <form onSubmit={submitHandler}>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" ref={usernameRef}></input>
+                <label htmlFor="username" className={styles.label}>
+                    Username
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    className={styles.input}
+                    ref={usernameRef}
+                ></input>
                 {usernameError && (
                     <label className={styles.label_error}>
                         Please insert a username.
                     </label>
                 )}
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className={styles.label}>
+                    Password
+                </label>
                 <input
                     type="password"
                     id="password"
                     minLength={isRegister ? '8' : undefined}
+                    className={styles.input}
                     ref={passwordRef}
                 ></input>
                 {passwordError && (
@@ -131,11 +141,14 @@ const AuthenticationScreen = () => {
                 )}
                 {isRegister && (
                     <>
-                        <label htmlFor="password">Confirm Password</label>
+                        <label htmlFor="password" className={styles.label}>
+                            Confirm Password
+                        </label>
                         <input
                             type="password"
                             id="confirm-password"
                             minLength="8"
+                            className={styles.input}
                             ref={confirmPasswordRef}
                         ></input>
                         {confirmPasswordError && (
@@ -159,7 +172,7 @@ const AuthenticationScreen = () => {
                 )}
                 {!isRegister && (
                     <>
-                        <span>
+                        <span className={styles.span}>
                             <p>Need an account?</p>
                             <p
                                 className={styles.p_authenticationText}
