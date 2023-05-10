@@ -6,11 +6,11 @@ Welcome to the Locations React App Demo repository! This is a simple web applica
 
 The Locations React App Demo currently includes the following features:
 
-- View a map with your current location.
-- Add new locations by clicking on the map and filling out a form.
+- Create an account.
+- Add new locations by using the provided form.
 - View a list of all saved locations.
-- View individual location details by clicking on a location in the list.
-- Edit existing locations.
+- View a Google map with the added locations.
+- Click on each location from a list to zoom in on said location.
 - Delete existing locations.
 
 ## Technologies Used
