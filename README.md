@@ -24,3 +24,5 @@ The Locations React App Demo uses the following technologies:
 - CSS Modules for app styling.
 
 ### For a quick overview of the app, you can check out the video here: https://bit.ly/react-locations-demo-video
+
+### The back-end part of the app is in another repo called react-locations-demo-backend.
